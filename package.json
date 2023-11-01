@@ -1,0 +1,27 @@
+{
+  "name": "daily-writer",
+  "version": "1.0.0",
+  "description": "A blogging site deployed on aws",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blog",
+    "daily",
+    "Vishal1297",
+    "nodejs"
+  ],
+  "author": "Vishal Yadav",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
