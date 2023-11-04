@@ -1,16 +1,13 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const path = require("path");
+require("dotenv").config();
+const http = require("http");
+const app = require("./app");
+const db = require("./db");
+const normalizePort = require("normalize-port");
 
-dotenv.config();
-const port = process.env.PORT;
+db.connect();
 
-const app = express();
-app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
+const PORT = normalizePort(process.env.PORT || "3000");
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+http.createServer(app).listen(PORT, () => {
+  console.log(`Server started at port : ${PORT}`);
+});
