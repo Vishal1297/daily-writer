@@ -1,4 +1,5 @@
 const { createHmac, randomBytes } = require("crypto");
+const { generateUserToken } = require("../services/auth");
 
 module.exports = (mongoose) => {
   const userSchema = mongoose.Schema(
@@ -24,7 +25,6 @@ module.exports = (mongoose) => {
       },
       profileImageURL: {
         type: String,
-        required: false,
         default: "/images/avatar.svg",
       },
       role: {
@@ -50,20 +50,29 @@ module.exports = (mongoose) => {
     next();
   });
 
-  userSchema.static("matchPass", async function (email, password) {
-    const user = await this.findOne({ email });
-    if (!user) throw new Error("User not found");
+  userSchema.static(
+    "matchPassAndGenerateToken",
+    async function (email, password) {
+      const user = await this.findOne({ email });
+      if (!user) throw new Error("User not found");
 
-    const hashedPass = createHmac("sha256", user.salt)
-      .update(password)
-      .digest("hex");
+      const hashedPass = createHmac("sha256", user.salt)
+        .update(password)
+        .digest("hex");
 
-    if (user.password !== hashedPass) {
-      throw new Error("Incorrect password, try again!");
+      if (user.password !== hashedPass) {
+        throw new Error("Incorrect password, try again!");
+      }
+
+      return generateUserToken(user);
     }
+  );
 
-    return user;
+  userSchema.method("toJSON", function () {
+    const { __v, _id, ...object } = this.toObject();
+    object.uuid = _id;
+    return object;
   });
 
-  return mongoose.model("user", userSchema);
+  return mongoose.model("User", userSchema);
 };

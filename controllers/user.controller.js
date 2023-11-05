@@ -1,6 +1,5 @@
 const crypto = require("crypto");
-const db = require("../models/mongoose");
-const User = db.users;
+const User = require("../models/mongoose").users;
 
 exports.getSignInPage = (req, res) => {
   return res.render("signin");
@@ -19,19 +18,35 @@ exports.signUp = async (req, res) => {
     password: password,
   });
 
-  await user
-    .save(user)
+  user
+    .save()
     .then((data) => {})
     .catch((error) => {
       console.log("Error while user signup, msg", error.message);
     });
 
-  return res.redirect("/");
+  try {
+    const token = await User.matchPassAndGenerateToken(email, password);
+    return res.cookie("token", token).redirect("/");
+  } catch (error) {
+    return res.render("signup", {
+      error: "Something went wrong, try again!",
+    });
+  }
 };
 
 exports.signIn = async (req, res) => {
-  const { email, password } = req.body;
-  const user = User.matchPass(email, password)
-  console.log('user', user);
-  return res.redirect("/");
+  try {
+    const { email, password } = req.body;
+    const token = await User.matchPassAndGenerateToken(email, password);
+    return res.cookie("token", token).redirect("/");
+  } catch (error) {
+    return res.render("signin", {
+      error: "Incorrect email or password!",
+    });
+  }
+};
+
+exports.logOut = async (req, res) => {
+  res.clearCookie("token").redirect("/");
 };

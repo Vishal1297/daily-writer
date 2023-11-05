@@ -8,14 +8,17 @@ module.exports = (mongoose) => {
         type: String,
         required: true,
       },
-      userId: {
+      body: {
         type: String,
         required: true,
-        unique: true,
       },
-      content: {
+      createdBy: {
         type: String,
         required: true,
+        ref: "user",
+      },
+      coverImageURL: {
+        type: String,
       },
     },
     { timestamps: true }
@@ -27,5 +30,5 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  return mongoose.model("post", postSchema);
+  return mongoose.model("Post", postSchema);
 };

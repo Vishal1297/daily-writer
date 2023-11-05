@@ -1,3 +1,3 @@
 # daily-writer
 
-A blogging site deployed on aws
+A blog post app built using nodeJs and express.
