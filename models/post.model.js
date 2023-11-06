@@ -1,9 +1,8 @@
+const { Schema } = require("mongoose");
+
 module.exports = (mongoose) => {
   const postSchema = mongoose.Schema(
     {
-      uuid: {
-        type: String,
-      },
       title: {
         type: String,
         required: true,
@@ -13,8 +12,7 @@ module.exports = (mongoose) => {
         required: true,
       },
       createdBy: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
         ref: "user",
       },
       coverImageURL: {
@@ -24,11 +22,5 @@ module.exports = (mongoose) => {
     { timestamps: true }
   );
 
-  postSchema.method("toJSON", function () {
-    const { __v, _id, ...object } = this.toObject();
-    object.uuid = _id;
-    return object;
-  });
-
-  return mongoose.model("Post", postSchema);
+  return mongoose.model("post", postSchema);
 };

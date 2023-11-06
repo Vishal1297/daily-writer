@@ -4,7 +4,7 @@ const secret = "#@12XYZ%&";
 
 function generateUserToken(user) {
   const payload = {
-    userId: user.uuid,
+    _id: user._id,
     name: user.fullName,
     email: user.email,
     role: user.role,

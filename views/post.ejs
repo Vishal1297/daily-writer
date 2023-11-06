@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-3">
+      <div class="card mt-4">
+        <img src="<%= post.coverImageURL %>" height="450px" alt="post" />
+        <div class="card-body">
+          <h5 class="card-title"><%= post.title %></h5>
+          <p class="card-text"><%= post.body %></p>
+          <p class="card-text">
+            <img
+              src="<%= post.createdBy.profileImageURL %>"
+              alt=""
+              width="50px"
+            />
+            <small class="text-body-secondary">
+              <%= post.createdBy.fullName %>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

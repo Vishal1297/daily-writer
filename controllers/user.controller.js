@@ -12,7 +12,6 @@ exports.getSignUpPage = (req, res) => {
 exports.signUp = async (req, res) => {
   const { fullName, email, password } = req.body;
   const user = new User({
-    uuid: crypto.randomUUID(),
     fullName: fullName,
     email: email,
     password: password,

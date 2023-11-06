@@ -4,9 +4,6 @@ const { generateUserToken } = require("../services/auth");
 module.exports = (mongoose) => {
   const userSchema = mongoose.Schema(
     {
-      uuid: {
-        type: String,
-      },
       fullName: {
         type: String,
         required: true,
@@ -63,16 +60,9 @@ module.exports = (mongoose) => {
       if (user.password !== hashedPass) {
         throw new Error("Incorrect password, try again!");
       }
-
       return generateUserToken(user);
     }
   );
 
-  userSchema.method("toJSON", function () {
-    const { __v, _id, ...object } = this.toObject();
-    object.uuid = _id;
-    return object;
-  });
-
-  return mongoose.model("User", userSchema);
+  return mongoose.model("user", userSchema);
 };

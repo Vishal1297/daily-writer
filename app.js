@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { checkAuthCookie } = require("./middlewares/auth");
-const { myLogger } = require("./middlewares/logger");
+const Post = require("./models/mongoose").posts;
 
 const app = express();
 app.set("view engine", "ejs");
@@ -19,7 +19,7 @@ function setMiddleware(app) {
   app.use(cookieParser());
   app.use(cors());
   app.use(checkAuthCookie("token"));
-  app.use(myLogger())
+  app.use(express.static(path.resolve("./public")));
 
   /**
    * Routes
@@ -29,9 +29,11 @@ function setMiddleware(app) {
 }
 
 function setAppRoutes(app) {
-  app.get("/", (req, res) => {
+  app.get("/", async (req, res) => {
+    const allPosts = await Post.find({}).sort({ createdAt: 1 });
     res.render("home", {
       user: req.user,
+      posts: allPosts,
     });
   });
 
