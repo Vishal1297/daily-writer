@@ -8,26 +8,28 @@
     <%- include('./partials/nav') %>
 
     <div class="container mt-3">
-      <div class="row row-cols-4 g-1">
+      <div class="card-group">
         <% posts.forEach(post => { %>
-        <div class="col">
-          <div class="card col" style="width: 18rem">
-            <img
-              src="<%= post.coverImageURL %>"
-              class="card-img-top"
-              height="250px"
-              alt="post"
-            />
-            <div class="card-body">
-              <h5 class="card-title"><%= post.title%></h5>
-              <a href="/post/<%= post._id %>" class="btn btn-primary"
-                >Read Now</a
-              >
-              <p class="card-text">
-                <small class="text-body-secondary"
-                  >Last updated 2 mins ago</small
+        <div class="row row-cols-4">
+          <div class="col">
+            <div class="card" style="width: 19rem">
+              <img
+                src="<%= post.coverImageURL %>"
+                class="card-img-top"
+                height="250px"
+                alt="post"
+              />
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title%></h5>
+                <a href="/post/<%= post._id %>" class="btn btn-primary"
+                  >Read Now</a
                 >
-              </p>
+                <p class="card-text">
+                  <small class="text-body-secondary"
+                    >Last updated 2 mins ago</small
+                  >
+                </p>
+              </div>
             </div>
           </div>
         </div>
