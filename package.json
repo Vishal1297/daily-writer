@@ -28,7 +28,6 @@
     "normalize-port": "^1.0.0"
   },
   "devDependencies": {
-    "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"
   }
 }
